@@ -1,0 +1,41 @@
+﻿@page "/newmath"
+
+<PageTitle>New Math</PageTitle>
+
+<h1>New Math 2.0</h1>
+
+<EditForm EditContext="@editContext">
+    <p role="status">result: @_pagedata.result</p>
+    <InputNumber @bind-Value="_pagedata.inputa" />
+    <InputNumber @bind-Value="_pagedata.inputb" />
+    <button class="btn btn-primary" @onclick="Add" value="ADD"></button>
+    <button class="btn btn-primary" @onclick="Subtract" value="SUBTRACT"></button>
+</EditForm>
+
+@code {
+
+    public class mypagedata
+    {
+        public int inputa { get; set; }
+        public int inputb { get; set; }
+        public int result { get; set; }
+    }
+    private mypagedata _pagedata = new mypagedata();
+    private EditContext editContext;
+    protected override void OnInitialized()
+    {
+        editContext = new(_pagedata);
+    }
+    private NewMath nmObj = new NewMath();
+
+    private void Add()
+    {
+        _pagedata.result = nmObj.add(_pagedata.inputa, _pagedata.inputb);
+    }
+
+    private void Subtract()
+    {
+        _pagedata.result = nmObj.subtract(_pagedata.inputa, _pagedata.inputb);
+    }
+
+}
