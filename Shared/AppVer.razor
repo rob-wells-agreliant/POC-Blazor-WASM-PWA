@@ -1,10 +1,47 @@
-﻿<div class="alert alert-secondary mt-4">
+﻿@inject HttpClient Http
+<div class="alert alert-secondary mt-4">
     <span class="oi oi-fork me-2" aria-hidden="true"></span>
     <strong>@VerNum</strong>
 </div>
 
 @code {
-    // Demonstrates how a parent component can supply parameters
-    [Parameter]
     public string? VerNum { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var AssemblyVer = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+        //try
+        //{
+        var appVer = await Http.GetFromJsonAsync<AppVersion>("sample-data/version.json");
+        if (AssemblyVer.Major < appVer.Major)
+        {
+            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new app is available - please update)";
+        }
+        else if (AssemblyVer.Minor < appVer.Minor)
+        {
+            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new feature is available - please update)";
+        }
+        else if (AssemblyVer.Revision < appVer.Revision)
+        {
+            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new revision is available - please update)";
+        }
+        else
+        {
+            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} vs {appVer.Major}.{appVer.Minor}.{appVer.Revision}";
+        }
+        //}
+        //catch (Exception e)
+        //{
+        // VerNum = "11.11.11";
+        //}
+    }
+
+    class AppVersion
+    {
+        public int Major { get; set; }
+        public int Minor { get; set; }
+        public int Build { get; set; }
+        public int Revision { get; set; }
+    }
 }
