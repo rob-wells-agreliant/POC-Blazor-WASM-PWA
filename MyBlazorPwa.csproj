@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-    <Version>5.5.5</Version>
+    <Version>2.2.2</Version>
   </PropertyGroup>
   <ItemGroup>
       <TrimmerRootAssembly Include="Microsoft.Authentication.WebAssembly.Msal" />
