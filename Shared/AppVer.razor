@@ -10,10 +10,20 @@
     protected override async Task OnInitializedAsync()
     {
         var AssemblyVer = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+        int secondsSinceEpoch = (int)t.TotalSeconds;
 
         //try
         //{
-        var appVer = await Http.GetFromJsonAsync<AppVersion>("sample-data/version.json");
+            // create request object
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://agrversions.azurewebsites.net/version/MyPWABlazor?d={secondsSinceEpoch}");
+        // add custom http header
+        request.Headers.Add("Access-Control-Allow-Origin", "https://localhost:8080");
+        request.Headers.Add("Access-Control-Allow-Credentials", "true");
+        // send request
+        using var httpResponse = await Http.SendAsync(request);
+
+        var appVer = await httpResponse.Content.ReadFromJsonAsync<AppVersion>();
         if (AssemblyVer.Major < appVer.Major)
         {
             VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new app is available - please update)";
