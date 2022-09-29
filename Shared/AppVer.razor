@@ -13,8 +13,8 @@
         TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
         int secondsSinceEpoch = (int)t.TotalSeconds;
 
-        //try
-        //{
+        try
+        {
             // create request object
         var request = new HttpRequestMessage(HttpMethod.Get, "https://agrversions.azurewebsites.net/version/MyPWABlazor?d={secondsSinceEpoch}");
         // add custom http header
@@ -40,11 +40,11 @@
         {
             VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} vs {appVer.Major}.{appVer.Minor}.{appVer.Revision}";
         }
-        //}
-        //catch (Exception e)
-        //{
-        // VerNum = "11.11.11";
-        //}
+        }
+        catch (Exception e)
+        {
+         VerNum = "11.11.11";
+        }
     }
 
     class AppVersion
