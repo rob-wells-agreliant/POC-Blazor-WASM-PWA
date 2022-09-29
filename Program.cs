@@ -15,4 +15,5 @@ builder.Services.AddMsalAuthentication(options =>
     options.ProviderOptions.DefaultAccessTokenScopes.Add("offline_access");
 });
 
+
 await builder.Build().RunAsync();
