@@ -3,13 +3,22 @@
 <PageTitle>New Math</PageTitle>
 
 <h1>New Math 2.0</h1>
+<p>This is a test of custom C# code embedded into this WebAssembly. Try going offline, closing the app, reopen the app
+    while offline, and
+    you will see that the custom C# math code still works.
+    <br /><b>New Math Feature:</b>
+<ul>
+    <li>add will add both numbers and increase by an extra 1 </li>
+    <li>subtract will subtract both numbers and decrease by an extra 1</li>
+</ul>
 
+</p>
 <EditForm EditContext="@editContext">
-    <p role="status">result: @_pagedata.result</p>
+    <p role="status" style="font: bold 20pt sans-serif; color:red;">result: @_pagedata.result</p>
     <InputNumber @bind-Value="_pagedata.inputa" />
-    <InputNumber @bind-Value="_pagedata.inputb" />
-    <button class="btn btn-primary" @onclick="Add" value="ADD"></button>
-    <button class="btn btn-primary" @onclick="Subtract" value="SUBTRACT"></button>
+    <InputNumber @bind-Value="_pagedata.inputb" /><br />&nbsp;<br />
+    <button class="btn btn-primary" @onclick="Add" value="ADD">ADD OPERATOR</button>&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-primary" @onclick="Subtract" value="SUBTRACT">SUBTRACT OPERATOR</button>
 </EditForm>
 
 @code {
