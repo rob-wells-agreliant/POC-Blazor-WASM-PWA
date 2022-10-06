@@ -16,34 +16,35 @@
         try
         {
             // create request object
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://agrversions.azurewebsites.net/version/MyPWABlazor?d={secondsSinceEpoch}");
-        // add custom http header
-        request.Headers.Add("Access-Control-Allow-Origin", "https://localhost:8080");
-        request.Headers.Add("Access-Control-Allow-Credentials", "true");
-        // send request
-        using var httpResponse = await Http.SendAsync(request);
+            var request = new HttpRequestMessage(HttpMethod.Get,
+            "https://agrversions.azurewebsites.net/version/MyPWABlazor?d={secondsSinceEpoch}");
+            // add custom http header
+            request.Headers.Add("Access-Control-Allow-Origin", "https://localhost:8080");
+            request.Headers.Add("Access-Control-Allow-Credentials", "true");
+            // send request
+            using var httpResponse = await Http.SendAsync(request);
 
-        var appVer = await httpResponse.Content.ReadFromJsonAsync<AppVersion>();
-        if (AssemblyVer.Major < appVer.Major)
-        {
-            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new app is available - please update)";
-        }
-        else if (AssemblyVer.Minor < appVer.Minor)
-        {
-            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new feature is available - please update)";
-        }
-        else if (AssemblyVer.Revision < appVer.Revision)
-        {
-            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new revision is available - please update)";
-        }
-        else
-        {
-            VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} vs {appVer.Major}.{appVer.Minor}.{appVer.Revision}";
-        }
+            var appVer = await httpResponse.Content.ReadFromJsonAsync<AppVersion>();
+            if (AssemblyVer.Major < appVer.Major)
+            {
+                VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new app is available - please update)";
+            }
+            else if (AssemblyVer.Minor < appVer.Minor)
+            {
+                VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new feature is available - please update)";
+            }
+            else if (AssemblyVer.Revision < appVer.Revision)
+            {
+                VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} (new revision is available - please update)";
+            }
+            else
+            {
+                VerNum = $"{AssemblyVer.Major}.{AssemblyVer.Minor}.{AssemblyVer.Revision} you are running the latest version";
+            }
         }
         catch (Exception e)
         {
-         VerNum = "(this software has detected no network and is now offline)";
+            VerNum = "(this software has detected no network and is now offline)";
         }
     }
 
